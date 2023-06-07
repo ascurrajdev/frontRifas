@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { Button, Form, Input, Card } from 'antd';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const App: React.FC = () => {
+
+  const [form] = Form.useForm();
+  const [quantity, setQuantity] = useState(1)
+  const onPlusQuantity = () => {
+    setQuantity(quantity + 1)
+  }
+  const onMinusQuantity = () => {
+    setQuantity(quantity - 1)
+  }
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+  <Card title="Rifa Solidaria" bordered={false}>
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={() => {
 
-export default App
+      }}
+    >
+      <Form.Item name="name" label="Nombre y Apellido" required tooltip="Este campo es requerido">
+        <Input placeholder="Introduzca su nombre" />
+      </Form.Item>
+      <Form.Item
+        label="Correo"
+        required
+        name="email"
+        tooltip="Debe introducir un correo valido"
+      >
+        <Input type="email" placeholder="example@test.com" />
+      </Form.Item>
+      <Form.Item
+        label="Telefono"
+        required
+        name="cellphone"
+        tooltip="Debe introducir un telefono valido"
+      >
+        <Input type="tel" placeholder="0991123456" />
+      </Form.Item>
+      <Form.Item
+        label="Rifas"
+        required
+      >
+        {
+          quantity > 1 && <Button type="default" onClick={onMinusQuantity}>-</Button>
+        }
+       &nbsp;&nbsp;&nbsp; <span>{quantity}</span> &nbsp;&nbsp;&nbsp;
+        <Button type="default" onClick={onPlusQuantity}>+</Button>
+      </Form.Item>
+      <Form.Item>
+        <Button size='large' type="primary">Pagar (Gs. {new Intl.NumberFormat("de-DE").format(quantity * 10000)})</Button>
+      </Form.Item>
+    </Form>
+  </Card>
+  );
+};
+
+export default App;
