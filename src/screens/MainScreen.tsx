@@ -53,11 +53,11 @@ export const MainScreen = () => {
                   client_id: data.data.id
                 }).then(({data}) => {
                   window.location = data.data.url
-                }).catch((error: AxiosError) => {
+                }).catch((error: any) => {
                   messageApi.error(error.response?.data?.message)
                   setIsLoad(false)
                 })
-              }).catch((error: AxiosError) => {
+              }).catch((error: any) => {
                 messageApi.error(error.response?.data?.message)
                 setIsLoad(false)
               })
