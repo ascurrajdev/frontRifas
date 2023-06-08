@@ -3,7 +3,6 @@ import { Button, Form, Input, Card, Spin, message } from 'antd';
 import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 export const MainScreen = () => {
   const [messageApi, contextHolder] = message.useMessage();
