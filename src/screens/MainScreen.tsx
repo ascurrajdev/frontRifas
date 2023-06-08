@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, Card, Spin, message } from 'antd';
+import { Button, Form, Input, Card, Spin, message, Image, Space } from 'antd';
 import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -39,6 +39,13 @@ export const MainScreen = () => {
         </div>
       ) : (
         <Card title={detailUserRaffle?.raffle?.description} bordered={false}>
+          <div>
+            {
+              !!detailUserRaffle?.raffle?.image_url && (
+                <Image rootClassName="mb-1" className='rounded' height={100} src={detailUserRaffle?.raffle?.image_url}/>
+              )
+            }
+          </div>
           <Form
             form={form}
             layout="vertical"
