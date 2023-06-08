@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Button, Form, Input, Card, Spin } from 'antd';
+import { Button, Form, Input, Card, Spin, message } from 'antd';
 import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 export const MainScreen = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate()
   const [form] = Form.useForm();
   const [isLoad, setIsLoad] = useState(false)
@@ -19,15 +20,20 @@ export const MainScreen = () => {
     setQuantity(quantity - 1);
   };
 
-  const { data: detailUserRaffle, isLoading, isError } = useQuery(['user-raffle-details', params.token], async () => {
-    const response = await api.get(`raffles/details/${params.token}`);
-    return response.data.data;
+  const { data: detailUserRaffle, isLoading, isError } = useQuery({
+    queryKey:['user-raffle-details', params.token],
+    queryFn:async () => {
+      const response = await api.get(`raffles/details/${params.token}`);
+      return response.data.data;
+    },
+    retry:0
   });
   
   if(isError) navigate("/")
 
   return (
     <div>
+      {contextHolder}
       {isLoading ? (
         <div className='w-full h-screen flex flex-center'>
           <Spin size="large" />
@@ -47,10 +53,12 @@ export const MainScreen = () => {
                   client_id: data.data.id
                 }).then(({data}) => {
                   window.location = data.data.url
-                }).catch(() => {
+                }).catch((error: AxiosError) => {
+                  messageApi.error(error.response?.data?.message)
                   setIsLoad(false)
                 })
-              }).catch(() => {
+              }).catch((error: AxiosError) => {
+                messageApi.error(error.response?.data?.message)
                 setIsLoad(false)
               })
             }}

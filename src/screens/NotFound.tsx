@@ -4,7 +4,7 @@ export function NotFound(){
         <Result
             status="404"
             title="404"
-            subTitle="Esta pagina no existe."
+            subTitle="Esta pagina no existe o ya expiro."
         />
     )
 }
