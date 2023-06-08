@@ -4,7 +4,7 @@ import { NotFound } from '../screens/NotFound'
 export function MainRouter(){
     return(
         <Routes>
-            <Route path="/:hashId" element={<MainScreen />}/>
+            <Route path="/:token" element={<MainScreen />}/>
             <Route path='*' element={<NotFound/>}/>
         </Routes>
     )
