@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, Card, Spin, message, Image, Space } from 'antd';
+import { Button, Form, Input, Card, Spin, message, Image } from 'antd';
 import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
