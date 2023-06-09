@@ -42,7 +42,7 @@ export const MainScreen = () => {
           <div>
             {
               !!detailUserRaffle?.raffle?.image_url && (
-                <Image rootClassName="mb-1" className='rounded' height={100} src={detailUserRaffle?.raffle?.image_url}/>
+                <Image rootClassName="mb-1" className='rounded' height={100} width={90} src={detailUserRaffle?.raffle?.image_url}/>
               )
             }
           </div>
