@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Statistic, Row, Col } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -28,7 +28,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('Inicio', '1', <PieChartOutlined />),
   getItem('Option 2', '2', <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Tom', '3'),
@@ -51,18 +51,26 @@ export const HomeScreen: React.FC = () => {
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+      <Layout style={{
+        background: colorBgContainer
+      }}>
+        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            <Breadcrumb.Item>Inicio</Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
-            Bill is a cat.
+          <div style={{ padding: 24, minHeight: 360 }}>
+            <Row>
+                <Col span={6}>
+                    <Statistic title="Rifas" value={1} />
+                </Col>
+                <Col span={6}>
+                    <Statistic title="Clientes" value={12} />
+                </Col>
+            </Row>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>Desarrollado por <a href="https://www.ascurrajdev.co">ascurrajdev</a></Footer>
       </Layout>
     </Layout>
   );
