@@ -4,7 +4,7 @@ import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-export const MainScreen = () => {
+export const MarketScreen = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate()
   const [form] = Form.useForm();
