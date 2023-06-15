@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import {
-  DesktopOutlined,
-  FileOutlined,
+  CreditCardOutlined,
+  CopyOutlined,
   PieChartOutlined,
   TeamOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Statistic, Row, Col } from 'antd';
@@ -29,13 +28,9 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem('Inicio', '1', <PieChartOutlined />),
-  getItem('Clientes', '2', <DesktopOutlined />),
-  getItem('Rifas', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Movimientos', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+  getItem('Clientes', '2', <TeamOutlined />),
+  getItem('Rifas', 'sub1', <CopyOutlined />),
+  getItem('Movimientos', 'sub2', <CreditCardOutlined />),
 ];
 
 export const HomeScreen: React.FC = () => {
