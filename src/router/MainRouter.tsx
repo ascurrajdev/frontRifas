@@ -8,6 +8,7 @@ export function MainRouter(){
         <Routes>
             <Route path="/login" element={<LoginScreen />}/>
             <Route path="/" element={<HomeScreen />}/>
+            <Route path="/home" element={<HomeScreen />}/>
             <Route path="/market/:token" element={<MarketScreen />}/>
             <Route path='*' element={<NotFound/>}/>
         </Routes>
