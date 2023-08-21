@@ -1,8 +1,19 @@
 import { Card } from "antd";
 import {EditOutlined,DeleteOutlined,ControlOutlined} from '@ant-design/icons';
+import { useQuery } from "@tanstack/react-query";
+import { listAllRaffles } from "../../services/raffles";
 export const ListRafflesScreen = () => {
+    const {data,isLoading} = useQuery({
+        queryKey: [],
+        queryFn: listAllRaffles
+    })
     return (
         <div>
+            {
+                data?.map((value: object) => {
+                    <h1>{JSON.stringify(value)}</h1>
+                })
+            }
             <Card
                 hoverable
                 style={{ width:240 }}
@@ -15,7 +26,6 @@ export const ListRafflesScreen = () => {
             >
                 <Card.Meta title="Pollada de Beneficiencia"/>
                 <Card.Meta description="Gs. 20.000" />
-                {/* <Switch checkedChildren="Activo" unCheckedChildren="Inactivo"/> */}
             </Card>
         </div>
     )
