@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAllRaffles } from "../../services/raffles";
 import { CardRaffle } from "../../components/CardRaffle";
+import { Spin } from "antd";
 interface RaffleObject{
     id: number,
     description: string,
@@ -22,7 +23,9 @@ export const ListRafflesScreen = () => {
                         <CardRaffle key={raffle.id} raffle={raffle}/>
                     ))
                 ) : (
-                    <h1>No hay datos</h1>
+                    <Spin tip="Loading" size="large">
+                        <div className="content" />
+                    </Spin>
                 )
             }
         </div>

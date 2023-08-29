@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CreditCardOutlined,
   CopyOutlined,
@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -42,13 +42,20 @@ type MenuKey = {
     url: string,
     key: React.Key
 }
-
 export const LayoutScreen: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const [current, setCurrent] = useState<string[]>([])
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    setCurrent(items.filter((value) => {
+      let currentData = JSON.parse(value?.key?.toString() || "")
+      return currentData?.url == location.pathname
+    }).map(value => value?.key?.toString() || ""));
+  },[location]);
   const onSelectMenu = (item: MenuItemSelected) => {
     let pathInfo: MenuKey = JSON.parse(item.keyPath[0]);
     navigate(pathInfo.url)
@@ -57,7 +64,7 @@ export const LayoutScreen: React.FC = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onSelect={onSelectMenu} />
+        <Menu theme="dark" defaultSelectedKeys={['1']} selectedKeys={current} mode="inline" items={items} onSelect={onSelectMenu} />
       </Sider>
       <Layout style={{
         background: colorBgContainer
