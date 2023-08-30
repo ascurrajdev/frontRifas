@@ -8,6 +8,7 @@ import { LayoutScreen } from '../screens/LayoutScreen'
 import { StatisticsRaffle } from '../screens/raffles/StatisticsRaffle'
 import { GuestAccess } from './GuestAccess'
 import { AuthAccess } from './AuthAccess'
+import { EditRaffleScreen } from '../screens/raffles/EditRaffleScreen'
 export function MainRouter(){
     return(
         <Routes>
@@ -26,6 +27,7 @@ export function MainRouter(){
                 <Route path="raffles">
                     <Route path="" element={<ListRafflesScreen />}/>
                     <Route path=":raffleId/statistics" element={<StatisticsRaffle />}/>
+                    <Route path=":raffleId/edit" element={<EditRaffleScreen />}/>
                 </Route>
             </Route>
             <Route path="/market/:token" element={<MarketScreen />}/>

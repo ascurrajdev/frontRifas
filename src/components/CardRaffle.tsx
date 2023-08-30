@@ -25,7 +25,7 @@ export const CardRaffle = ({raffle}: PropType) => {
             cover={<img alt="imagen de la rifa" src={ !!raffle.image_url ? raffle.image_url : "https://image.slidesharecdn.com/opencontenthistory-1222747121590635-9/95/ten-years-of-open-content-21-728.jpg?cb=1222722154"}/>}
             actions={[
                 <ControlOutlined key="control" onClick={() => navigate(`/raffles/${raffle.id}/statistics`)}/>,
-                <EditOutlined key="edit"/>,
+                <EditOutlined key="edit" onClick={() => navigate(`/raffles/${raffle.id}/edit`)}/>,
                 <DeleteOutlined key="delete"/>
             ]}
         >

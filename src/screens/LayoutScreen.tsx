@@ -71,9 +71,7 @@ export const LayoutScreen: React.FC = () => {
       }}>
         {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
         <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }} items={[{title:'Inicio'}]}>
-            {/* <Breadcrumb.Item>Inicio</Breadcrumb.Item> */}
-          </Breadcrumb>
+          {/* <Breadcrumb style={{ margin: '16px 0' }} items={[{title:'Inicio'}]}></Breadcrumb> */}
           <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>Desarrollado por <a href="https://www.ascurrajdev.co">ascurrajdev</a></Footer>
