@@ -1,4 +1,4 @@
-import { Card, Form, Input, Button, Row, Col } from "antd"
+import { Card, Form, Input, Button, Row, Col, message } from "antd"
 import { loginWithEmailAndPassword } from "../../services/auth"
 import { userStore } from "../../store/userStore"
 interface CredentialsObject {
@@ -6,16 +6,22 @@ interface CredentialsObject {
     password: string,
 }
 export const LoginScreen = () => {
+    const [messageApi, contextHolder] = message.useMessage()
     const loginState = userStore((state) => state.login)
     const onFinishSubmit = (values: CredentialsObject) => {
         loginWithEmailAndPassword(values).then((data) => {
             loginState(data.data)
         }).catch((e) => {
-
+            if(!!e?.response?.data?.message){
+                messageApi.error(e?.response?.data?.message);
+            }else{
+                messageApi.error(e?.message);
+            }
         })
     }
     return(
         <Row>
+            {contextHolder}
             <Col lg={{span:12, offset:6}} xs={{span:24}} sm={{span:24}}>
                 <Card>
                     <Form

@@ -6,11 +6,21 @@ import { HomeScreen } from '../screens/HomeScreen'
 import { ListRafflesScreen } from '../screens/raffles/ListRafflesScreen'
 import { LayoutScreen } from '../screens/LayoutScreen'
 import { StatisticsRaffle } from '../screens/raffles/StatisticsRaffle'
+import { GuestAccess } from './GuestAccess'
+import { AuthAccess } from './AuthAccess'
 export function MainRouter(){
     return(
         <Routes>
-            <Route path="/login" element={<LoginScreen />}/>
-            <Route path="/" element={<LayoutScreen />}>
+            <Route path="/login" element={ 
+                <GuestAccess>
+                    <LoginScreen />
+                </GuestAccess>
+            }/>
+            <Route path="/" element={
+                <AuthAccess>
+                    <LayoutScreen />
+                </AuthAccess>
+            }>
                 <Route path="" element={<HomeScreen />}/>
                 <Route path="home" element={<HomeScreen />}/>
                 <Route path="raffles">
