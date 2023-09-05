@@ -9,3 +9,13 @@ export const listAllRaffles = async () => {
     })
     return data
 }
+
+export const statisticsRaffles = async (raffleId: string) => {
+    const token = userStore.getState().token;
+    let {data} = await api.get(`raffles/${raffleId}/statistics`,{
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data
+}

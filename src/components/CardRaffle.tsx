@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
-import {EditOutlined,DeleteOutlined,ControlOutlined} from '@ant-design/icons';
+import {EditOutlined,DeleteOutlined,ControlOutlined, UserOutlined} from '@ant-design/icons';
 interface RaffleObject{
     id: number,
     description: string,
@@ -25,6 +25,7 @@ export const CardRaffle = ({raffle}: PropType) => {
             cover={<img alt="imagen de la rifa" src={ !!raffle.image_url ? raffle.image_url : "https://image.slidesharecdn.com/opencontenthistory-1222747121590635-9/95/ten-years-of-open-content-21-728.jpg?cb=1222722154"}/>}
             actions={[
                 <ControlOutlined key="control" onClick={() => navigate(`/raffles/${raffle.id}/statistics`)}/>,
+                <UserOutlined key="users"/>,
                 <EditOutlined key="edit" onClick={() => navigate(`/raffles/${raffle.id}/edit`)}/>,
                 <DeleteOutlined key="delete"/>
             ]}
