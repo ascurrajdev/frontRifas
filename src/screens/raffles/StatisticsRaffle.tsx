@@ -100,12 +100,12 @@ export const StatisticsRaffle = () => {
           <Row>
               <Col span={12}>
                 <Card bordered={false}>
-                  <Statistic value={data.data.totals.sold_quantity} suffix={` /${data.data.totals.quantity}`} title="Rifas Vendidas" loading={isLoading}/>
+                  <Statistic value={data?.data?.totals?.sold_quantity ?? 0} suffix={` /${data?.data?.totals?.quantity ?? 0}`} title="Rifas Vendidas" loading={isLoading}/>
                 </Card>
               </Col>
               <Col span={12}>
                 <Card bordered={false}>
-                  <Statistic value={data.data.totals.sold_amount} title="Total Recaudado" prefix="PYG " loading={isLoading}/>
+                  <Statistic value={data?.data?.totals?.sold_amount ?? 0} title="Total Recaudado" prefix="PYG " loading={isLoading}/>
                 </Card>
               </Col>
               <Col lg={24}>
