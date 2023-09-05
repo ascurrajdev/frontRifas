@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Card, Col, Row, Statistic, Table } from "antd"
+import { useEffect } from "react";
+import { Card, Col, Row, Skeleton, Statistic, Table } from "antd"
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Line } from "react-chartjs-2"
 import { statisticsRaffles } from "../../services/raffles";
@@ -40,7 +41,7 @@ export const options = {
   
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   
-  export const data = {
+  export const dataChart = {
     labels,
     datasets: [
       {
@@ -88,30 +89,28 @@ export const StatisticsRaffle = () => {
   //   labels:[],
   //   datasets:[]
   // })
-  // const {data, isSuccess, isLoading, isError} = useQuery({
-  //   queryKey:['statistics'],
-  //   queryFn: statisticsRaffles
-  // })
-  // useEffect(() => {
-  //   console.log(data)
-  // },[data])
+  const {raffleId} = useParams()
+  const {data, isLoading} = useQuery({
+    queryKey:['statistics', raffleId],
+    queryFn: ({queryKey}) => statisticsRaffles(queryKey[1] ?? "")
+  })
   return(
       <div>
           <h1>Estadisticas generales de la rifa</h1>
           <Row>
               <Col span={12}>
                 <Card bordered={false}>
-                  <Statistic value={12} suffix=" /100" title="Rifas Vendidas"/>
+                  <Statistic value={data.data.totals.sold_quantity} suffix={` /${data.data.totals.quantity}`} title="Rifas Vendidas" loading={isLoading}/>
                 </Card>
               </Col>
               <Col span={12}>
                 <Card bordered={false}>
-                  <Statistic value={120000} title="Total Recaudado" prefix="PYG "/>
+                  <Statistic value={data.data.totals.sold_amount} title="Total Recaudado" prefix="PYG " loading={isLoading}/>
                 </Card>
               </Col>
               <Col lg={24}>
                 <Card>
-                  <Line options={options} data={data} />
+                  <Line options={options} data={dataChart} />
                 </Card>
               </Col>
               <Col span={24}>
