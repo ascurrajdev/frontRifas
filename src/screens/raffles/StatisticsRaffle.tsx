@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Col, Row, Skeleton, Statistic, Table } from "antd"
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -40,7 +40,15 @@ export const options = {
   };
   
   const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
+  type DataSetType = {
+    label:string,
+    data: number[],
+    backgroundColor: string
+  }
+  interface DataSetStructureType {
+    labels: string[],
+    datasets: DataSetType[]
+  }
   export const dataChart = {
     labels,
     datasets: [
@@ -49,11 +57,11 @@ export const options = {
         data: [123233,2,3,4,5,6,7],
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
-      {
-        label: 'Jose Ascurra',
-        data: [1,10000,3,0,5,6,7],
-        backgroundColor: 'rgba(5, 1, 255, 0.5)',
-      },
+      // {
+      //   label: 'Jose Ascurra',
+      //   data: [1,10000,3,0,5,6,7],
+      //   backgroundColor: 'rgba(5, 1, 255, 0.5)',
+      // },
     ],
   };
   interface DataType {
@@ -85,15 +93,30 @@ export const options = {
     }
   ];
 export const StatisticsRaffle = () => {
-  // const [dataSheet, setDataSheet] = useState({
-  //   labels:[],
-  //   datasets:[]
-  // })
+  const [dataSheet, setDataSheet] = useState<DataSetStructureType>({
+    labels:[],
+    datasets:[]
+  })
+
   const {raffleId} = useParams()
   const {data, isLoading} = useQuery({
     queryKey:['statistics', raffleId],
     queryFn: ({queryKey}) => statisticsRaffles(queryKey[1] ?? "")
   })
+  useEffect(() => {
+    if(!!data?.data){
+      setDataSheet({
+        labels: data?.data?.dates,
+        datasets: [
+          {
+            label: 'Recaudacion Total',
+            data: data?.data?.details,
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          }
+        ]
+      })
+    }
+  },[data])
   return(
       <div>
           <h1>Estadisticas generales de la rifa</h1>
@@ -110,7 +133,7 @@ export const StatisticsRaffle = () => {
               </Col>
               <Col lg={24}>
                 <Card>
-                  <Line options={options} data={dataChart} />
+                  <Line options={options} data={dataSheet} />
                 </Card>
               </Col>
               <Col span={24}>
