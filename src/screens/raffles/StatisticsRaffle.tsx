@@ -43,7 +43,8 @@ export const options = {
   type DataSetType = {
     label:string,
     data: number[],
-    backgroundColor: string
+    backgroundColor: string,
+    borderColor: string
   }
   interface DataSetStructureType {
     labels: string[],
@@ -69,6 +70,10 @@ export const options = {
     name:string,
     sold: number,
     available: number,
+  }
+  interface DetailDataType {
+    key: string, 
+    data: number[]
   }
   const columns: ColumnsType<DataType> = [
     {
@@ -107,16 +112,28 @@ export const StatisticsRaffle = () => {
     if(!!data?.data){
       setDataSheet({
         labels: data?.data?.dates,
-        datasets: [
+        datasets: data?.data?.details.map((value: DetailDataType) => (
           {
-            label: 'Recaudacion Total',
-            data: data?.data?.details,
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          }
-        ]
+            label: value.key,
+            data: value.data,
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)'
+          })
+        )
       })
+      console.log(dataSheet)
     }
   },[data])
+
+    // : [
+    //       {
+    //         label: 'Recaudacion Total',
+    //         data: ,
+    //         borderColor: 'rgb(53, 162, 235)',
+    //         backgroundColor: 'rgba(53, 162, 235, 0.5)'
+    //       }
+    //     ]
+
   return(
       <div>
           <h1>Estadisticas generales de la rifa</h1>
