@@ -9,7 +9,7 @@ import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider, Header } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -66,13 +66,13 @@ export const LayoutScreen: React.FC = () => {
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} selectedKeys={current} mode="inline" items={items} onSelect={onSelectMenu} />
       </Sider>
-      <Layout style={{
-        background: colorBgContainer
-      }}>
-        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
+      <Layout>
+        <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: '0 16px' }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }} items={[{title:'Inicio'}]}></Breadcrumb> */}
-          <Outlet />
+          <Breadcrumb style={{ margin: '16px 0' }} items={[{title:'Inicio'},{title:'Rifas'}]}></Breadcrumb>
+          <div style={{padding: 24, height: '100%', background: colorBgContainer}}>
+            <Outlet />
+          </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Desarrollado por <a href="https://www.ascurrajdev.co">ascurrajdev</a></Footer>
       </Layout>

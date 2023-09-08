@@ -66,10 +66,17 @@ export const options = {
     ],
   };
   interface DataType {
-    key:string,
+    key:number,
     name:string,
-    sold: number,
-    available: number,
+    amount: number,
+    number: string,
+    quantity: number,
+  }
+  interface UserDataType{
+    name: string,
+    date_sold: string,
+    quantity_sold: string,
+    amount_sold: number
   }
   interface DetailDataType {
     key: string, 
@@ -82,26 +89,28 @@ export const options = {
       key:'name'
     },
     {
-      title:'Sold',
-      dataIndex:'sold',
-      key:'sold'
+      title:'DateTime',
+      dataIndex:'datetime',
+      key:'datetime'
     },
     {
-      title:'Available',
-      dataIndex:'available',
-      key:'available'
+      title:'Quantity',
+      dataIndex:'quantity',
+      key:'quantity'
     },
     {
-      title:'Share',
-      dataIndex:'share',
-      key:'share'
-    }
+      title:'Amount',
+      dataIndex:'amount',
+      key:'amount'
+    },
   ];
 export const StatisticsRaffle = () => {
   const [dataSheet, setDataSheet] = useState<DataSetStructureType>({
     labels:[],
     datasets:[]
   })
+
+  const [dataSourceUsers, setDataSourceUsers] = useState<DataType[]>([])
 
   const {raffleId} = useParams()
   const {data, isLoading} = useQuery({
@@ -121,7 +130,12 @@ export const StatisticsRaffle = () => {
           })
         )
       })
-      console.log(dataSheet)
+      setDataSourceUsers(data?.data?.users?.map((value: UserDataType) => ({
+        name: value.name,
+        datetime: value.date_sold,
+        quantity: value.quantity_sold,
+        amount: value.amount_sold
+      })))
     }
   },[data])
 
@@ -154,7 +168,7 @@ export const StatisticsRaffle = () => {
                 </Card>
               </Col>
               <Col span={24}>
-                <Table columns={columns} />
+                <Table columns={columns} dataSource={dataSourceUsers}/>
               </Col>
           </Row>
       </div>
