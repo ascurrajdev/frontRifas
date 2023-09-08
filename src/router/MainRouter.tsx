@@ -35,7 +35,7 @@ export function MainRouter(){
                 </Route>
             </Route>
             <Route path="/market/:token" element={<MarketScreen />}/>
-            <Route path='*' element={<NotFound/>}/>
+            <Route path='*' element={<NotFound />}/>
         </Routes>
     )
 }
