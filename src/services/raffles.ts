@@ -19,3 +19,13 @@ export const statisticsRaffles = async (raffleId: string) => {
     })
     return data
 }
+
+export const getAdminUsersRaffles = async (raffleId: string) => {
+    const token = userStore.getState().token
+    let {data} = await api.get(`raffles/${raffleId}/admin`, {
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data
+}
