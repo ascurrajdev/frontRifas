@@ -25,3 +25,7 @@
 .mb-1{
   margin-bottom: 1em;
 }
+.py-3{
+  padding-top: 0.75rem; /* 12px */
+  padding-bottom: 0.75rem; /* 12px */
+}
