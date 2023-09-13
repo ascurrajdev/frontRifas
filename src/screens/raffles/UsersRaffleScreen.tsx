@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { getAdminUsersRaffles } from "../../services/raffles";
 import { Avatar, Card, Space, Spin, Table } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 interface UserObj{
     id: number,
     name: string,
@@ -43,10 +44,14 @@ export const UsersRaffleScreen = () => {
                             <Card
                                 hoverable
                                 style={{ width:240 }}
+                                actions={[
+                                    <DeleteOutlined key="delete"/>
+                                ]}
                             >
                                 <Card.Meta 
                                 avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
-                                title={user.name}/>
+                                title={user.name}
+                                />
                             </Card>
                         ))
                     }
