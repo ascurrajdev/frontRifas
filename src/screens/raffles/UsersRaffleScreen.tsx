@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
-import { getAdminUsersRaffles } from "../../services/raffles";
-import { Avatar, Card, Space, Spin, Table } from "antd";
+import { getAdminUsersRaffles, getUsersRaffles } from "../../services/raffles";
+import { Avatar, Card, Space, Spin, Table, Row, Col, Divider } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 interface UserObj{
     id: number,
@@ -18,46 +18,92 @@ interface AdminUserObj {
 }
 export const UsersRaffleScreen = () => {
     const {raffleId} = useParams();
-    const {data: dataAminUsersRaffles, isLoading} = useQuery({
+    const {data: dataAminUsersRaffles, isLoading: isLoadingAdmin} = useQuery({
         queryKey: ['raffles',raffleId,'admin'],
         queryFn: () => getAdminUsersRaffles(raffleId ?? "")
+    });
+    const {data: dataUsersRaffle, isLoading: isLoadingUsers} = useQuery({
+        queryKey: ['raffles',raffleId, 'users'],
+        queryFn: () => getUsersRaffles(raffleId ?? "")
     })
     useEffect(() => {
-        console.log(dataAminUsersRaffles)
+        console.log(dataAminUsersRaffles);
     },[dataAminUsersRaffles])
+    useEffect(() => {
+        console.log(dataUsersRaffle);
+    },[dataUsersRaffle])
     return (
-        <>
-        <h1>Administradores</h1>
-        {
-            isLoading ? (
-                <div className="w-full h-screen flex">
-                    <Space align="center" direction="horizontal">
-                        <Space align="center" direction="vertical">
-                            <Spin/>
-                        </Space>
-                    </Space>
-                </div>
-            ) : (
-                <div className="w-full h-screen py-3">
-                    {
-                        dataAminUsersRaffles?.data?.map(({user} : AdminUserObj ) => (
-                            <Card
-                                hoverable
-                                style={{ width:240 }}
-                                actions={[
-                                    <DeleteOutlined key="delete"/>
-                                ]}
-                            >
-                                <Card.Meta 
-                                avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
-                                title={user.name}
-                                />
-                            </Card>
-                        ))
-                    }
-                </div>
-            )
-        }
-        </>
+        <div className="w-full h-screen py-3 flex">
+            <div>
+                <h1>Administradores:</h1>
+                <Divider />
+                {
+                    isLoadingAdmin ? (
+                        <div className="w-full h-screen flex">
+                            <Space align="center" direction="horizontal">
+                                <Space align="center" direction="vertical">
+                                    <Spin/>
+                                </Space>
+                            </Space>
+                        </div>
+                    ) : (
+                            <Row>
+                            {
+                                dataAminUsersRaffles?.data?.map(({user} : AdminUserObj ) => (
+                                    <Col span={6}>
+                                        <Card
+                                            hoverable
+                                            actions={[
+                                                <DeleteOutlined key="delete"/>
+                                            ]}
+                                            >
+                                            <Card.Meta 
+                                            avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
+                                            title={user.name}
+                                            />
+                                        </Card>
+                                    </Col>
+                                ))
+                            }
+                            </Row>
+                    )
+                }
+            </div>
+            <div>
+                <h1>Usuarios:</h1>
+                <Divider />
+                {
+                    isLoadingUsers ? (
+                        <div className="w-full h-screen flex">
+                            <Space align="center" direction="horizontal">
+                                <Space align="center" direction="vertical">
+                                    <Spin/>
+                                </Space>
+                            </Space>
+                        </div>
+                    ) : (
+                            <Row>
+                            {
+                                dataUsersRaffle?.data?.map(({user} : AdminUserObj ) => (
+                                    <Col span={6}>
+                                        <Card
+                                            hoverable
+                                            actions={[
+                                                <DeleteOutlined key="delete"/>
+                                            ]}
+                                            >
+                                            <Card.Meta 
+                                            avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
+                                            title={user.name}
+                                            />
+                                        </Card>
+                                    </Col>
+                                ))
+                            }
+                            </Row>
+                    )
+                }
+            </div>
+        </div>
     )    
 }

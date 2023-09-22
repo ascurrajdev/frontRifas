@@ -1,31 +1,3 @@
-*{
-  margin:0;
-  padding:0;
-}
-.w-full{
-  width: 100%;
-}
-.h-screen{
-  height: 100vh;
-}
-.flex{
-  display: flex;
-}
-.flex-center{
-  align-items: center;
-  justify-content: center;
-}
-.w1{
-  width: 1px;
-  height: 1px;
-}
-.rounded{
-  border-radius: 10px;
-}
-.mb-1{
-  margin-bottom: 1em;
-}
-.py-3{
-  padding-top: 0.75rem; /* 12px */
-  padding-bottom: 0.75rem; /* 12px */
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
