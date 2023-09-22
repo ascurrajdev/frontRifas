@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { getAdminUsersRaffles, getUsersRaffles } from "../../services/raffles";
-import { Avatar, Card, Space, Spin, Table, Row, Col, Divider, Button, FloatButton } from "antd";
-import { ControlOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { Avatar, Card, Space, Spin, Table, Row, Col, Divider, Button, Modal, QRCode } from "antd";
+import { ControlOutlined, DeleteOutlined, DownloadOutlined, EditOutlined, PlusOutlined, PrinterOutlined, QrcodeOutlined, ShareAltOutlined } from "@ant-design/icons";
 interface UserObj{
     id: number,
     name: string,
@@ -36,12 +36,36 @@ export const UsersRaffleScreen = () => {
         queryKey: ['raffles',raffleId, 'users'],
         queryFn: () => getUsersRaffles(raffleId ?? "")
     })
+    const [isOpenModalQr, setIsOpenModalQr] = useState(false)
+    const [qrValue, setQrValue] = useState("");
     useEffect(() => {
         console.log(dataAminUsersRaffles);
     },[dataAminUsersRaffles])
     useEffect(() => {
         console.log(dataUsersRaffle);
     },[dataUsersRaffle])
+    const handleOkModalQr = () => {
+        setIsOpenModalQr(false);
+    }
+    const handleCancelModalQr = () => {
+        setIsOpenModalQr(false);
+    }
+    const handleOpenQrModal = (id: string)   => {
+        setQrValue(`/market/${id}`);
+        setIsOpenModalQr(true)
+    }
+    const downloadQRCode = () => {
+        const canvas = document.getElementById('myqrcode')?.querySelector<HTMLCanvasElement>('canvas');
+        if (canvas) {
+          const url = canvas.toDataURL();
+          const a = document.createElement('a');
+          a.download = 'QRCode.png';
+          a.href = url;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      };
     return (
         <div className="w-full h-screen py-3 flex">
             <div>
@@ -96,11 +120,12 @@ export const UsersRaffleScreen = () => {
                     ) : (
                             <Row>
                             {
-                                dataUsersRaffle?.data?.map(({user, min_number, max_number} : UserObj ) => (
+                                dataUsersRaffle?.data?.map(({user, min_number, max_number, id}: UserObj ) => (
                                     <Col span={6}>
                                         <Card
                                             hoverable
                                             actions={[
+                                                <QrcodeOutlined  key="qr" onClick={() => handleOpenQrModal(id)}/>,
                                                 <EditOutlined key="control"/>,
                                                 <DeleteOutlined key="delete"/>
                                             ]}
@@ -112,12 +137,24 @@ export const UsersRaffleScreen = () => {
                                             />
                                         </Card>
                                     </Col>
-                                ))
+                                ))  
                             }
                             </Row>
                     )
                 }
             </div>
+            <Modal 
+                open={isOpenModalQr} 
+                onOk={handleOkModalQr} 
+                onCancel={handleCancelModalQr}
+                footer={[
+                    <Button onClick={() => downloadQRCode()} icon={<DownloadOutlined />} type="primary" size="large"/>
+                ]}
+            >
+                <div id="myqrcode">
+                    <QRCode value={qrValue}/>
+                </div>
+            </Modal>
         </div>
     )    
 }
