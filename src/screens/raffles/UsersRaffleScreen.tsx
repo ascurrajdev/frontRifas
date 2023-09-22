@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { getAdminUsersRaffles, getUsersRaffles } from "../../services/raffles";
 import { Avatar, Card, Space, Spin, Table, Row, Col, Divider, Button, FloatButton } from "antd";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { ControlOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 interface UserObj{
     id: number,
     name: string,
@@ -15,6 +15,16 @@ interface AdminUserObj {
     created_at: string,
     updated_at: string,
     user: UserObj
+}
+interface UserObj {
+    id: number,
+    user_id: number,
+    raffle_id: number,
+    created_at: string,
+    updated_at: string,
+    user: UserObj,
+    max_number: number,
+    min_number: number
 }
 export const UsersRaffleScreen = () => {
     const {raffleId} = useParams();
@@ -86,17 +96,19 @@ export const UsersRaffleScreen = () => {
                     ) : (
                             <Row>
                             {
-                                dataUsersRaffle?.data?.map(({user} : AdminUserObj ) => (
+                                dataUsersRaffle?.data?.map(({user, min_number, max_number} : UserObj ) => (
                                     <Col span={6}>
                                         <Card
                                             hoverable
                                             actions={[
+                                                <EditOutlined key="control"/>,
                                                 <DeleteOutlined key="delete"/>
                                             ]}
                                             >
                                             <Card.Meta 
                                             avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
                                             title={user.name}
+                                            description={`Nro. ${min_number} - ${max_number}`}
                                             />
                                         </Card>
                                     </Col>
