@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAllRaffles } from "../../services/raffles";
 import { CardRaffle } from "../../components/CardRaffle";
-import { Spin, FloatButton } from "antd";
+import { Spin, FloatButton, Button, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 interface RaffleObject{
@@ -20,6 +20,8 @@ export const ListRafflesScreen = () => {
     })
     return (
         <div>
+            <h1>Rifas:</h1><Button type="primary" shape="circle" icon={<PlusOutlined/>} onClick={() => navigate('/raffles/add')}/>
+            <Divider />
             {
                 !isLoading ? (
                     data?.data?.map((raffle: RaffleObject) => (
@@ -31,7 +33,7 @@ export const ListRafflesScreen = () => {
                     </Spin>
                 )
             }
-            <FloatButton type="primary" icon={<PlusOutlined/>} onClick={() => navigate('/raffles/add')}/>
+            
         </div>
     )
 }

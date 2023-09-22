@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { getAdminUsersRaffles, getUsersRaffles } from "../../services/raffles";
-import { Avatar, Card, Space, Spin, Table, Row, Col, Divider } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Avatar, Card, Space, Spin, Table, Row, Col, Divider, Button, FloatButton } from "antd";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 interface UserObj{
     id: number,
     name: string,
@@ -36,6 +36,7 @@ export const UsersRaffleScreen = () => {
         <div className="w-full h-screen py-3 flex">
             <div>
                 <h1>Administradores:</h1>
+                <Button icon={<PlusOutlined color="white"/>} type="primary" size="large" shape="circle" />
                 <Divider />
                 {
                     isLoadingAdmin ? (
@@ -71,6 +72,7 @@ export const UsersRaffleScreen = () => {
             </div>
             <div>
                 <h1>Usuarios:</h1>
+                <Button icon={<PlusOutlined color="white"/>} type="primary" size="large" shape="circle" />
                 <Divider />
                 {
                     isLoadingUsers ? (
