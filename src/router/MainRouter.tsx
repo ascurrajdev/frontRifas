@@ -11,6 +11,8 @@ import { AuthAccess } from './AuthAccess'
 import { EditRaffleScreen } from '../screens/raffles/EditRaffleScreen'
 import { StoreRaffleScreen } from '../screens/raffles/StoreRaffleScreen'
 import { UsersRaffleScreen } from '../screens/raffles/UsersRaffleScreen'
+import { ListClientsScreen } from '../screens/clients/ListClientsScreen'
+import { ListTransactionsScreen } from '../screens/transactions/ListTransactionsScreen'
 export function MainRouter(){
     return(
         <Routes>
@@ -32,6 +34,12 @@ export function MainRouter(){
                     <Route path=":raffleId/statistics" element={<StatisticsRaffle />}/>
                     <Route path=":raffleId/edit" element={<EditRaffleScreen />}/>
                     <Route path=":raffleId/users" element={<UsersRaffleScreen />}/>
+                </Route>
+                <Route path="clients">
+                    <Route path="" element={<ListClientsScreen />}/>
+                </Route>
+                <Route path="transactions">
+                    <Route path="" element={<ListTransactionsScreen />}/>
                 </Route>
             </Route>
             <Route path="/market/:token" element={<MarketScreen />}/>
