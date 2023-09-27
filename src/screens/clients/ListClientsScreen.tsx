@@ -1,5 +1,12 @@
 import { Table } from "antd";
+import { getAllClients } from "../../services/clients";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 export const ListClientsScreen = () => {
+    const {data, isLoading} = useQuery({
+        queryKey:['clients','index'],
+        queryFn: () => getAllClients()
+    })
     const dataSource = [
         {
           key: '1',
@@ -32,7 +39,9 @@ export const ListClientsScreen = () => {
           key: 'address',
         },
       ];
-      
+    useEffect(() => {
+        console.log(data)
+    },[data])
     return(
         <div>
             <h1>Listado de clientes</h1>
