@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAllRaffles } from "../../services/raffles";
 import { CardRaffle } from "../../components/CardRaffle";
-import { Spin, FloatButton, Button, Divider } from "antd";
+import { Spin, Button, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 interface RaffleObject{

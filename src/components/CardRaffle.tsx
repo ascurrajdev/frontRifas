@@ -26,7 +26,9 @@ export const CardRaffle = ({raffle}: PropType) => {
             actions={[
                 <ControlOutlined key="control" onClick={() => navigate(`/raffles/${raffle.id}/statistics`)}/>,
                 <UserOutlined key="users" onClick={() => navigate(`/raffles/${raffle.id}/users`)}/>,
-                <EditOutlined key="edit" onClick={() => navigate(`/raffles/${raffle.id}/edit`)}/>,
+                <EditOutlined key="edit" onClick={() => navigate(`/raffles/${raffle.id}/edit`,{
+                    state: raffle
+                })}/>,
                 <DeleteOutlined key="delete"/>
             ]}
         >

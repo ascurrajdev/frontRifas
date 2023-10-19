@@ -26,7 +26,7 @@ export const ListTransactionsScreen = () => {
         }
     ]
     useEffect(() => {
-        if(!!data.data){
+        if(!!data?.data){
             setListCollections(data.data)
         }
     },[data])
