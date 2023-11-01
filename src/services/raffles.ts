@@ -20,6 +20,16 @@ export const getRaffle = async (raffleId: string) => {
     return data
 }
 
+export const addRaffle = async (body: any) => {
+    const token = userStore.getState().token;
+    let {data} = await api.post(`raffles`,body,{
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data 
+}
+
 export const statisticsRaffles = async (raffleId: string) => {
     const token = userStore.getState().token;
     let {data} = await api.get(`raffles/${raffleId}/statistics`,{
