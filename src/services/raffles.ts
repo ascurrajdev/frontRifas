@@ -28,6 +28,15 @@ export const deleteRaffle = async (raffleId: string|number) => {
     })
     return data
 }
+export const updateRaffle = async (raffleId: string|number, body: any) => {
+    const token = userStore.getState().token;
+    let {data} = await api.put(`raffles/${raffleId}`,body,{
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data
+}
 export const addRaffle = async (body: any) => {
     const token = userStore.getState().token;
     let {data} = await api.post(`raffles`,body,{

@@ -1,7 +1,7 @@
-import { Button, Form, Input, Spin } from "antd"
+import { Button, Form, Input, Spin, message } from "antd"
 import { useParams } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
-import { getRaffle } from '../../services/raffles';
+import { getRaffle, updateRaffle } from '../../services/raffles';
 
 export const EditRaffleScreen = () => {
     const {raffleId} = useParams();
@@ -10,6 +10,14 @@ export const EditRaffleScreen = () => {
         queryKey:['raffle',raffleId,'edit'],
         queryFn: ({queryKey}) => getRaffle(queryKey[1] || "")
     })
+    const onFinishEdit = (values : any) => {
+        updateRaffle(raffleId ?? "",values).then((data) => {
+            console.log(data)
+            message.success("Se ha editado correctamente!")
+        }).catch((e) => {
+            message.error("Ocurrio un error al editar la rifa!")
+        })
+    }
     return(
         <>
         {
@@ -20,6 +28,7 @@ export const EditRaffleScreen = () => {
                     layout="vertical"
                     form={form}
                     initialValues={data?.data}
+                    onFinish={onFinishEdit}
                 >
                     <Form.Item label="Descripcion" name="description">
                         <Input placeholder="Introduzca una descripcion"/>
@@ -28,7 +37,7 @@ export const EditRaffleScreen = () => {
                         <Input type="number" placeholder="Introduzca un monto"/>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary">Guardar</Button>
+                        <Button htmlType="submit" type="primary">Guardar</Button>
                     </Form.Item>
                 </Form>
             )
