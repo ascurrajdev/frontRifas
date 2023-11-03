@@ -19,7 +19,15 @@ export const getRaffle = async (raffleId: string) => {
     })
     return data
 }
-
+export const deleteRaffle = async (raffleId: string|number) => {
+    const token = userStore.getState().token;
+    let {data} = await api.delete(`raffles/${raffleId}`,{
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data
+}
 export const addRaffle = async (body: any) => {
     const token = userStore.getState().token;
     let {data} = await api.post(`raffles`,body,{

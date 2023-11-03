@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listAllRaffles } from "../../services/raffles";
 import { CardRaffle } from "../../components/CardRaffle";
-import { Spin, Button, Divider } from "antd";
+import { Spin, Button, Divider, Row, Col } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 interface RaffleObject{
@@ -14,7 +14,7 @@ interface RaffleObject{
 }
 export const ListRafflesScreen = () => {
     const navigate = useNavigate()
-    const {data,isLoading} = useQuery({
+    const {data,isLoading,refetch} = useQuery({
         queryKey: ['listRaffles'],
         queryFn: listAllRaffles
     })
@@ -22,18 +22,21 @@ export const ListRafflesScreen = () => {
         <div>
             <h1>Rifas:</h1><Button type="primary" shape="circle" icon={<PlusOutlined/>} onClick={() => navigate('/raffles/add')}/>
             <Divider />
-            {
-                !isLoading ? (
-                    data?.data?.map((raffle: RaffleObject) => (
-                        <CardRaffle key={raffle.id} raffle={raffle}/>
-                    ))
-                ) : (
-                    <Spin tip="Loading" size="large">
-                        <div className="content" />
-                    </Spin>
-                )
-            }
-            
+            <Row>
+                {
+                    !isLoading ? (
+                        data?.data?.map((raffle: RaffleObject) => (
+                            <Col span={6}>
+                                <CardRaffle onDelete={() => refetch()} key={raffle.id} raffle={raffle}/>
+                            </Col>
+                        ))
+                    ) : (
+                        <Spin tip="Loading" size="large">
+                            <div className="content" />
+                        </Spin>
+                    )
+                }
+            </Row>
         </div>
     )
 }

@@ -1,6 +1,7 @@
-import { Card } from "antd";
+import { Card, Popconfirm, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {EditOutlined,DeleteOutlined,ControlOutlined, UserOutlined} from '@ant-design/icons';
+import { deleteRaffle } from "../services/raffles";
 interface RaffleObject{
     id: number,
     description: string,
@@ -10,14 +11,22 @@ interface RaffleObject{
     image_url: null | string,
 }
 interface PropType{
-    raffle: RaffleObject
+    raffle: RaffleObject,
+    onDelete: () => void
 }
-export const CardRaffle = ({raffle}: PropType) => {
+export const CardRaffle = ({raffle, onDelete}: PropType) => {
     const navigate = useNavigate()
     const formatCurrency = (amount: number) => {
         return `PYG. ${new Intl.NumberFormat('de-DE').format(amount)}`
     }
-
+    const deleteThisRaffle = () => {
+        deleteRaffle(raffle.id).then((data) => {
+            onDelete()
+            message.success("La rifa ha sido borrada exitosamente")
+        }).catch((e) => {
+            message.error("Ocurrio un error inesperado al borrar!")
+        })
+    }
     return(
         <Card
             hoverable
@@ -29,7 +38,9 @@ export const CardRaffle = ({raffle}: PropType) => {
                 <EditOutlined key="edit" onClick={() => navigate(`/raffles/${raffle.id}/edit`,{
                     state: raffle
                 })}/>,
-                <DeleteOutlined key="delete"/>
+                <Popconfirm title="Eliminar Rifa" description="Esta segur@ de eliminar esta rifa?" onConfirm={deleteThisRaffle} okText="Si" cancelText="No">
+                    <DeleteOutlined key="delete"/>
+                </Popconfirm>
             ]}
         >
             <Card.Meta title={raffle.description}/>
