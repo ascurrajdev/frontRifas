@@ -1,19 +1,20 @@
 import { Button, Form, Input, Spin, message } from "antd"
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 import { getRaffle, updateRaffle } from '../../services/raffles';
 
 export const EditRaffleScreen = () => {
     const {raffleId} = useParams();
     const [form] = Form.useForm();
+    const navigate = useNavigate();
     const {data, isLoading} = useQuery({
         queryKey:['raffle',raffleId,'edit'],
         queryFn: ({queryKey}) => getRaffle(queryKey[1] || "")
     })
     const onFinishEdit = (values : any) => {
         updateRaffle(raffleId ?? "",values).then((data) => {
-            console.log(data)
             message.success("Se ha editado correctamente!")
+            navigate("/raffles")
         }).catch((e) => {
             message.error("Ocurrio un error al editar la rifa!")
         })

@@ -1,13 +1,16 @@
 import { Button, Form, Input, message} from "antd"
 import { addRaffle } from "../../services/raffles";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 export const StoreRaffleScreen = () => {
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage();
+    const navigate = useNavigate();
     const mutation = useMutation({
         mutationFn:(values) => addRaffle(values),
         onSuccess: (data) => {
             messageApi.success("Se ha creado correctamente la rifa")
+            navigate("/raffles")
         },
         onError: (data) => {
             messageApi.error("Ha ocurrido un error al registra la rifa")
