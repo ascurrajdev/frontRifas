@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { DeleteOutlined, DownloadOutlined, EditOutlined, QrcodeOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Modal, Popconfirm, QRCode } from "antd";
+import { DeleteOutlined, DownloadOutlined, EditOutlined, LinkOutlined, QrcodeOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Modal, Popconfirm, QRCode, message } from "antd";
 import { deleteUsersRaffle } from "../services/raffles";
 type UserObj = {
     id: number,
@@ -44,6 +44,10 @@ export const CardUser = ({userRaffle}: PropType) => {
             document.body.removeChild(a);
         }
     };
+    const handleLinkShare = () => {
+        navigator.clipboard.writeText(`/market/${userRaffle.id}`)
+        message.success("Se ha copiado correctamente")
+    }
     const handleDeleteUserRaffle = () => {
         deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((data) => {
             console.log(data)
@@ -56,14 +60,14 @@ export const CardUser = ({userRaffle}: PropType) => {
             <Card
                 hoverable
                 actions={[
-                    <QrcodeOutlined  key="qr" onClick={() => handleOpenQrModal()}/>,
-                    <EditOutlined key="control"/>,
+                    <QrcodeOutlined  key={`qr-${userRaffle.id}`} onClick={() => handleOpenQrModal()}/>,
+                    <LinkOutlined  key={`control-${userRaffle.id}`} onClick={() => handleLinkShare()}/>,
                     <Popconfirm
                         title="Eliminar usuario"
                         description="Desea eliminar a este usuario?"
                         onConfirm={handleDeleteUserRaffle}
                     >
-                        <DeleteOutlined key="delete"/>
+                        <DeleteOutlined  key={`delete-${userRaffle.id}`}/>
                     </Popconfirm>
                 ]}
                 >

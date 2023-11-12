@@ -13,6 +13,7 @@ import { StoreRaffleScreen } from '../screens/raffles/StoreRaffleScreen'
 import { UsersRaffleScreen } from '../screens/raffles/UsersRaffleScreen'
 import { ListClientsScreen } from '../screens/clients/ListClientsScreen'
 import { ListTransactionsScreen } from '../screens/transactions/ListTransactionsScreen'
+import { StoreUserRaffleScreen } from '../screens/raffles/StoreUserRaffleScreen'
 export function MainRouter(){
     return(
         <Routes>
@@ -34,6 +35,7 @@ export function MainRouter(){
                     <Route path=":raffleId/statistics" element={<StatisticsRaffle />}/>
                     <Route path=":raffleId/edit" element={<EditRaffleScreen />}/>
                     <Route path=":raffleId/users" element={<UsersRaffleScreen />}/>
+                    <Route path=":raffleId/users/add" element={<StoreUserRaffleScreen />} />
                 </Route>
                 <Route path="clients">
                     <Route path="" element={<ListClientsScreen />}/>
