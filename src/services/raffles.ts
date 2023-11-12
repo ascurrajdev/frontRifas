@@ -76,3 +76,13 @@ export const getUsersRaffles = async (raffleId: string) => {
     })
     return data;
 }
+
+export const deleteUsersRaffle = async (raffleId: number, userRaffleId: string) => {
+    const token = userStore.getState().token;
+    let {data} = await api.delete(`raffles/${raffleId}/users/${userRaffleId}`,{
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data;
+}

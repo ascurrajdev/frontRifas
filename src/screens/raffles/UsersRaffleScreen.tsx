@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { getAdminUsersRaffles, getUsersRaffles } from "../../services/raffles";
 import { Avatar, Card, Space, Spin, Table, Row, Col, Divider, Button, Modal, QRCode } from "antd";
 import { ControlOutlined, DeleteOutlined, DownloadOutlined, EditOutlined, PlusOutlined, PrinterOutlined, QrcodeOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { CardUser } from "../../components/CardUser";
 interface UserObj{
     id: number,
     name: string,
@@ -16,8 +17,8 @@ interface AdminUserObj {
     updated_at: string,
     user: UserObj
 }
-interface UserObj {
-    id: number,
+type UserRaffleObj = {
+    id: string,
     user_id: number,
     raffle_id: number,
     created_at: string,
@@ -36,36 +37,12 @@ export const UsersRaffleScreen = () => {
         queryKey: ['raffles',raffleId, 'users'],
         queryFn: () => getUsersRaffles(raffleId ?? "")
     })
-    const [isOpenModalQr, setIsOpenModalQr] = useState(false)
-    const [qrValue, setQrValue] = useState("");
     useEffect(() => {
         console.log(dataAminUsersRaffles);
     },[dataAminUsersRaffles])
     useEffect(() => {
         console.log(dataUsersRaffle);
     },[dataUsersRaffle])
-    const handleOkModalQr = () => {
-        setIsOpenModalQr(false);
-    }
-    const handleCancelModalQr = () => {
-        setIsOpenModalQr(false);
-    }
-    const handleOpenQrModal = (id: string)   => {
-        setQrValue(`/market/${id}`);
-        setIsOpenModalQr(true)
-    }
-    const downloadQRCode = () => {
-        const canvas = document.getElementById('myqrcode')?.querySelector<HTMLCanvasElement>('canvas');
-        if (canvas) {
-          const url = canvas.toDataURL();
-          const a = document.createElement('a');
-          a.download = 'QRCode.png';
-          a.href = url;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        }
-      };
     return (
         <div className="w-full h-screen py-3 flex">
             <div>
@@ -120,22 +97,9 @@ export const UsersRaffleScreen = () => {
                     ) : (
                             <Row>
                             {
-                                dataUsersRaffle?.data?.map(({user, min_number, max_number, id}: UserObj ) => (
+                                dataUsersRaffle?.data?.map((userRaffle: UserRaffleObj ) => (
                                     <Col span={6}>
-                                        <Card
-                                            hoverable
-                                            actions={[
-                                                <QrcodeOutlined  key="qr" onClick={() => handleOpenQrModal(id)}/>,
-                                                <EditOutlined key="control"/>,
-                                                <DeleteOutlined key="delete"/>
-                                            ]}
-                                            >
-                                            <Card.Meta 
-                                            avatar={<Avatar src={`https://ui-avatars.com/api/?name=${user.name}`}/>}
-                                            title={user.name}
-                                            description={`Nro. ${min_number} - ${max_number}`}
-                                            />
-                                        </Card>
+                                        <CardUser userRaffle={userRaffle}/>
                                     </Col>
                                 ))  
                             }
@@ -143,18 +107,7 @@ export const UsersRaffleScreen = () => {
                     )
                 }
             </div>
-            <Modal 
-                open={isOpenModalQr} 
-                onOk={handleOkModalQr} 
-                onCancel={handleCancelModalQr}
-                footer={[
-                    <Button onClick={() => downloadQRCode()} icon={<DownloadOutlined />} type="primary" size="large"/>
-                ]}
-            >
-                <div id="myqrcode">
-                    <QRCode value={qrValue}/>
-                </div>
-            </Modal>
+            
         </div>
     )    
 }
