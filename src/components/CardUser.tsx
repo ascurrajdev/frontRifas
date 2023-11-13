@@ -17,9 +17,10 @@ type UserRaffleObj = {
     min_number: number
 }
 interface PropType {
-    userRaffle: UserRaffleObj
+    userRaffle: UserRaffleObj,
+    onDelete: () => void
 }
-export const CardUser = ({userRaffle}: PropType) => {
+export const CardUser = ({userRaffle, onDelete}: PropType) => {
     const [isOpenModalQr, setIsOpenModalQr] = useState(false)
     const [qrValue, setQrValue] = useState("");
     const handleOkModalQr = () => {
@@ -50,9 +51,11 @@ export const CardUser = ({userRaffle}: PropType) => {
     }
     const handleDeleteUserRaffle = () => {
         deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((data) => {
-            console.log(data)
+            message.success("Se ha eliminado correctamente")
         }).catch(() => {
-
+            message.error("Hubo un error al eliminar")
+        }).finally(() => {
+            onDelete()
         })
     }
     return (

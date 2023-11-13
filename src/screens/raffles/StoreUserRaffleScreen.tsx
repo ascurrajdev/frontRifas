@@ -69,14 +69,14 @@ export function StoreUserRaffleScreen(){
                 </Form.Item>
                 <Form.Item
                     name="min_number"
-                    label="Nro. Minimo"
+                    label="Nro. Desde"
                     rules={[{required:true, message:'El numero minimo es requerido'}]}
                 >
                     <Input type="number"/>
                 </Form.Item>
                 <Form.Item
                     name="max_number"
-                    label="Nro. Maximo"
+                    label="Nro. Hasta"
                     rules={[{required:true, message:'El numero maximo es requerido'}]}
                 >
                     <Input type="number"/>

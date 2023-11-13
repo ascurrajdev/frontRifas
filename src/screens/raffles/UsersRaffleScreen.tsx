@@ -30,11 +30,11 @@ type UserRaffleObj = {
 export const UsersRaffleScreen = () => {
     const navigate = useNavigate();
     const {raffleId} = useParams();
-    const {data: dataAminUsersRaffles, isLoading: isLoadingAdmin} = useQuery({
-        queryKey: ['raffles',raffleId,'admin'],
-        queryFn: () => getAdminUsersRaffles(raffleId ?? "")
-    });
-    const {data: dataUsersRaffle, isLoading: isLoadingUsers} = useQuery({
+    // const {data: dataAminUsersRaffles, isLoading: isLoadingAdmin} = useQuery({
+    //     queryKey: ['raffles',raffleId,'admin'],
+    //     queryFn: () => getAdminUsersRaffles(raffleId ?? "")
+    // });
+    const {data: dataUsersRaffle, isLoading: isLoadingUsers, refetch: refetchUsersRaffle} = useQuery({
         queryKey: ['raffles',raffleId, 'users'],
         queryFn: () => getUsersRaffles(raffleId ?? "")
     })
@@ -58,7 +58,7 @@ export const UsersRaffleScreen = () => {
                             {
                                 dataUsersRaffle?.data?.map((userRaffle: UserRaffleObj ) => (
                                     <Col key={userRaffle.id} span={6}>
-                                        <CardUser userRaffle={userRaffle}/>
+                                        <CardUser onDelete={() => refetchUsersRaffle()} userRaffle={userRaffle}/>
                                     </Col>
                                 ))  
                             }
