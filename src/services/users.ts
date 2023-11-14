@@ -9,3 +9,12 @@ export const searchUsers = async (search: string) => {
     })
     return data
 }
+export const logoutUser = async () => {
+    const token = userStore.getState().token;
+    const {data} = await api.post('logout',{},{
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return data
+}

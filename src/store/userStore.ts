@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { logoutUser } from "../services/users";
 interface UserObject{
-    user: object,
+    user: UserDto,
     token: string,
 }
 type UserDto = {
@@ -9,22 +10,31 @@ type UserDto = {
     name: string,
 }
 interface UserState{
-    user: UserDto,
-    token: string,
+    user: UserDto | null,
+    token: string | null,
     isLogged: boolean,
-    login: (data: UserObject) => void
+    login: (data: UserObject) => void,
+    logout: () => void,
 }
 export const userStore = create<UserState>()(
     persist(
         (set) => ({
-            user:{},
-            token:"",
+            user: null,
+            token: null,
             isLogged:false,
             login: (data) => {
                 set({
                     token: data.token,
                     user: data.user,
                     isLogged: true
+                })
+            },
+            logout: async () => {
+                await logoutUser()
+                set({
+                    token: null,
+                    user: null,
+                    isLogged: false,
                 })
             }
         }),

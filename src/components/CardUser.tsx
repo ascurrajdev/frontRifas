@@ -30,7 +30,7 @@ export const CardUser = ({userRaffle, onDelete}: PropType) => {
         setIsOpenModalQr(false);
     }
     const handleOpenQrModal = ()   => {
-        setQrValue(`/market/${userRaffle.id}`);
+        setQrValue(`${location.origin}/market/${userRaffle.id}`);
         setIsOpenModalQr(true)
     }
     const downloadQRCode = () => {
@@ -46,7 +46,7 @@ export const CardUser = ({userRaffle, onDelete}: PropType) => {
         }
     };
     const handleLinkShare = () => {
-        navigator.clipboard.writeText(`/market/${userRaffle.id}`)
+        navigator.clipboard.writeText(`${location.origin}/market/${userRaffle.id}`)
         message.success("Se ha copiado correctamente")
     }
     const handleDeleteUserRaffle = () => {

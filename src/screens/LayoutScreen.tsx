@@ -4,7 +4,6 @@ import {
   CopyOutlined,
   PieChartOutlined,
   TeamOutlined,
-  ProfileOutlined,
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
@@ -42,13 +41,14 @@ type MenuKey = {
 }
 export const LayoutScreen: React.FC = () => {
   const userName = userStore()?.user?.name
+  const logout = userStore((state) => state.logout)
   const items: MenuItem[] = [
     getItem('Inicio', JSON.stringify({url:'/',key:'inicio'}), <PieChartOutlined />),
     getItem('Clientes', JSON.stringify({url:'/clients',key:'clientes'}) , <TeamOutlined />),
     getItem('Rifas', JSON.stringify({url:'/raffles',key:'rifas'}), <CopyOutlined />),
     getItem('Movimientos', JSON.stringify({url:'/transactions',key:'movimientos'}), <CreditCardOutlined />),
     getItem(userName,JSON.stringify({url:'/profile',key:'perfil'}),<UserOutlined />,[
-      getItem("Ver Perfil",JSON.stringify({url:'/profile',key:'view-perfil'})),
+      // getItem("Ver Perfil",JSON.stringify({url:'/profile',key:'view-perfil'})),
       getItem("Cerrar Sesion",JSON.stringify({url:'/logout',key:'logout'}), <LogoutOutlined />),
     ])
   ];
@@ -65,9 +65,13 @@ export const LayoutScreen: React.FC = () => {
       return currentData?.url == location.pathname
     }).map(value => value?.key?.toString() || ""));
   },[location]);
-  const onSelectMenu = (item: MenuItemSelected) => {
+  const onSelectMenu = async (item: MenuItemSelected) => {
     let pathInfo: MenuKey = JSON.parse(item.keyPath[0]);
-    navigate(pathInfo.url)
+    if(pathInfo.key == 'logout'){
+      await logout()
+    }else{
+      navigate(pathInfo.url)
+    }
   }
   return (
     <Layout style={{ minHeight: '100vh' }}>
