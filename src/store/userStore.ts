@@ -4,8 +4,12 @@ interface UserObject{
     user: object,
     token: string,
 }
+type UserDto = {
+    id: number,
+    name: string,
+}
 interface UserState{
-    user: Object,
+    user: UserDto,
     token: string,
     isLogged: boolean,
     login: (data: UserObject) => void

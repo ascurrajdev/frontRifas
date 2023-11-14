@@ -4,10 +4,14 @@ import {
   CopyOutlined,
   PieChartOutlined,
   TeamOutlined,
+  ProfileOutlined,
+  UserOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { userStore } from '../store/userStore';
 
 const { Content, Footer, Sider, Header } = Layout;
 
@@ -28,12 +32,6 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem('Inicio', JSON.stringify({url:'/',key:'inicio'}), <PieChartOutlined />),
-  getItem('Clientes', JSON.stringify({url:'/clients',key:'clientes'}) , <TeamOutlined />),
-  getItem('Rifas', JSON.stringify({url:'/raffles',key:'rifas'}), <CopyOutlined />),
-  getItem('Movimientos', JSON.stringify({url:'/transactions',key:'movimientos'}), <CreditCardOutlined />),
-];
 type MenuItemSelected = {
     key: React.Key,
     keyPath: string[]
@@ -43,6 +41,17 @@ type MenuKey = {
     key: React.Key
 }
 export const LayoutScreen: React.FC = () => {
+  const userName = userStore()?.user?.name
+  const items: MenuItem[] = [
+    getItem('Inicio', JSON.stringify({url:'/',key:'inicio'}), <PieChartOutlined />),
+    getItem('Clientes', JSON.stringify({url:'/clients',key:'clientes'}) , <TeamOutlined />),
+    getItem('Rifas', JSON.stringify({url:'/raffles',key:'rifas'}), <CopyOutlined />),
+    getItem('Movimientos', JSON.stringify({url:'/transactions',key:'movimientos'}), <CreditCardOutlined />),
+    getItem(userName,JSON.stringify({url:'/profile',key:'perfil'}),<UserOutlined />,[
+      getItem("Ver Perfil",JSON.stringify({url:'/profile',key:'view-perfil'})),
+      getItem("Cerrar Sesion",JSON.stringify({url:'/logout',key:'logout'}), <LogoutOutlined />),
+    ])
+  ];
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
