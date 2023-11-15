@@ -23,7 +23,7 @@ export const CardRaffle = ({raffle, onDelete}: PropType) => {
         deleteRaffle(raffle.id).then((_data) => {
             onDelete()
             message.success("La rifa ha sido borrada exitosamente")
-        }).catch((e) => {
+        }).catch((_e) => {
             message.error("Ocurrio un error inesperado al borrar!")
         })
     }

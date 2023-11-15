@@ -50,7 +50,7 @@ export const CardUser = ({userRaffle, onDelete}: PropType) => {
         message.success("Se ha copiado correctamente")
     }
     const handleDeleteUserRaffle = () => {
-        deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((data) => {
+        deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((_data) => {
             message.success("Se ha eliminado correctamente")
         }).catch(() => {
             message.error("Hubo un error al eliminar")
