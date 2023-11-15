@@ -15,9 +15,29 @@ export const ListTransactionsScreen = () => {
             key:'id'
         },
         {
+            title:'Usuario',
+            dataIndex:'user',
+            render:(user) => <a>{user.name}</a>
+        },
+        {
+            title:'Cliente',
+            dataIndex:'client',
+            render:(client) => <a>{client.name}</a>
+        },
+        {
+            title:'Monto Total',
+            dataIndex:'amount',
+            key:'amount'
+        },
+        {
+            title:'Monto Pagado',
+            dataIndex:'paid',
+            key:'paid'
+        },
+        {
             title:'Creado',
             dataIndex:'created_at',
-            key: 'created_at'
+            key: 'created_at',
         },
         {
             title:'Actualizado',
