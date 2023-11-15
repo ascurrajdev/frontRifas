@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select, Spin, message } from "antd";
-import React, { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import lodash from 'lodash'
 import { searchUsers } from "../../services/users";

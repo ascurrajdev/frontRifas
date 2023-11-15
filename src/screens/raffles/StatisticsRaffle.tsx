@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Row, Skeleton, Statistic, Table } from "antd"
+import { Card, Col, Row, Statistic, Table } from "antd"
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Line } from "react-chartjs-2"
