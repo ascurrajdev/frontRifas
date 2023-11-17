@@ -7,11 +7,10 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import type { BreadcrumbProps, MenuProps } from 'antd';
+import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { userStore } from '../store/userStore';
-import { BreadcrumbItemType } from 'antd/es/breadcrumb/Breadcrumb';
 
 const { Content, Footer, Sider, Header } = Layout;
 
