@@ -8,11 +8,11 @@ export const StoreRaffleScreen = () => {
     const navigate = useNavigate();
     const mutation = useMutation({
         mutationFn:(values) => addRaffle(values),
-        onSuccess: (data) => {
+        onSuccess: (_data) => {
             messageApi.success("Se ha creado correctamente la rifa")
             navigate("/raffles")
         },
-        onError: (data) => {
+        onError: (_data) => {
             messageApi.error("Ha ocurrido un error al registra la rifa")
         }
     })

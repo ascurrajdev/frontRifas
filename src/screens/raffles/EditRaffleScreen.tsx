@@ -12,10 +12,10 @@ export const EditRaffleScreen = () => {
         queryFn: ({queryKey}) => getRaffle(queryKey[1] || "")
     })
     const onFinishEdit = (values : any) => {
-        updateRaffle(raffleId ?? "",values).then((data) => {
+        updateRaffle(raffleId ?? "",values).then((_data) => {
             message.success("Se ha editado correctamente!")
             navigate("/raffles")
-        }).catch((e) => {
+        }).catch((_e) => {
             message.error("Ocurrio un error al editar la rifa!")
         })
     }

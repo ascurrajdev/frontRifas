@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DeleteOutlined, DownloadOutlined, EditOutlined, LinkOutlined, QrcodeOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { DeleteOutlined, DownloadOutlined, LinkOutlined, QrcodeOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Modal, Popconfirm, QRCode, message } from "antd";
 import { deleteUsersRaffle } from "../services/raffles";
 type UserObj = {
@@ -50,7 +50,7 @@ export const CardUser = ({userRaffle, onDelete}: PropType) => {
         message.success("Se ha copiado correctamente")
     }
     const handleDeleteUserRaffle = () => {
-        deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((data) => {
+        deleteUsersRaffle(userRaffle.raffle_id, userRaffle.id).then((_data) => {
             message.success("Se ha eliminado correctamente")
         }).catch(() => {
             message.error("Hubo un error al eliminar")

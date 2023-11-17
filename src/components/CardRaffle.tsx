@@ -20,10 +20,10 @@ export const CardRaffle = ({raffle, onDelete}: PropType) => {
         return `PYG. ${new Intl.NumberFormat('de-DE').format(amount)}`
     }
     const deleteThisRaffle = () => {
-        deleteRaffle(raffle.id).then((data) => {
+        deleteRaffle(raffle.id).then((_data) => {
             onDelete()
             message.success("La rifa ha sido borrada exitosamente")
-        }).catch((e) => {
+        }).catch((_e) => {
             message.error("Ocurrio un error inesperado al borrar!")
         })
     }

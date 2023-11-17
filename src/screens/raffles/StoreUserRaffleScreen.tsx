@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select, Spin, message } from "antd";
-import React, { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import lodash from 'lodash'
 import { searchUsers } from "../../services/users";
@@ -41,7 +41,7 @@ export function StoreUserRaffleScreen(){
             min_number: fields.min_number,
             max_number: fields.max_number
         }
-        storeUserRaffle(data,raffleId ?? "").then((data) => {
+        storeUserRaffle(data,raffleId ?? "").then((_data) => {
             message.success('Se ha registrado correctamente')
             navigate(`/raffles/${raffleId}/users`)
         })
