@@ -7,10 +7,11 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import type { BreadcrumbProps, MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { userStore } from '../store/userStore';
+import { BreadcrumbItemType } from 'antd/es/breadcrumb/Breadcrumb';
 
 const { Content, Footer, Sider, Header } = Layout;
 
@@ -39,15 +40,19 @@ type MenuKey = {
     url: string,
     key: React.Key
 }
+type BreadcrumbPropsCustom = {
+  title: string,
+  href?: string
+}
 export const LayoutScreen: React.FC = () => {
   const userName = userStore()?.user?.name
   const logout = userStore((state) => state.logout)
   const items: MenuItem[] = [
-    getItem('Inicio', JSON.stringify({url:'/',key:'inicio'}), <PieChartOutlined />),
-    getItem('Clientes', JSON.stringify({url:'/clients',key:'clientes'}) , <TeamOutlined />),
-    getItem('Rifas', JSON.stringify({url:'/raffles',key:'rifas'}), <CopyOutlined />),
-    getItem('Movimientos', JSON.stringify({url:'/transactions',key:'movimientos'}), <CreditCardOutlined />),
-    getItem(userName,JSON.stringify({url:'/profile',key:'perfil'}),<UserOutlined />,[
+    getItem('Inicio', JSON.stringify({url:'/',label:'Inicio',key:'inicio'}), <PieChartOutlined />),
+    getItem('Clientes', JSON.stringify({url:'/clients',label:'Clientes',key:'clientes'}) , <TeamOutlined />),
+    getItem('Rifas', JSON.stringify({url:'/raffles',key:'rifas',label:'Rifas'}), <CopyOutlined />),
+    getItem('Movimientos', JSON.stringify({url:'/transactions',key:'movimientos',label:'Movimientos'}), <CreditCardOutlined />),
+    getItem(userName,JSON.stringify({url:'/profile',key:'perfil',label:'Perfil'}),<UserOutlined />,[
       // getItem("Ver Perfil",JSON.stringify({url:'/profile',key:'view-perfil'})),
       getItem("Cerrar Sesion",JSON.stringify({url:'/logout',key:'logout'}), <LogoutOutlined />),
     ])
@@ -59,6 +64,7 @@ export const LayoutScreen: React.FC = () => {
   const [current, setCurrent] = useState<string[]>([])
   const navigate = useNavigate();
   const location = useLocation();
+  const [breadcrumbItems,setBreadcrumbItems] = useState<BreadcrumbPropsCustom[]>();
   useEffect(() => {
     setCurrent(items.filter((value) => {
       let currentData = JSON.parse(value?.key?.toString() || "")
@@ -73,6 +79,19 @@ export const LayoutScreen: React.FC = () => {
       navigate(pathInfo.url)
     }
   }
+  useEffect(() => {
+    if(location.pathname == "/"){
+      setBreadcrumbItems([{
+        title:'Home',
+        href:"/"
+      }])
+    }else{
+      setBreadcrumbItems(location.pathname.split("/").slice(1).map((path: string,index: number, values: string[]) => ({
+        title: path[0].toUpperCase() + path.slice(1).toLowerCase(),
+        href: "/" + values.slice(0,index+1).join("/")
+      })))
+    }
+  },[location.pathname])
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
@@ -82,7 +101,7 @@ export const LayoutScreen: React.FC = () => {
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }} items={[{title:'Inicio'},{title:'Rifas'}]}></Breadcrumb>
+          <Breadcrumb style={{ margin: '16px 0' }} items={breadcrumbItems} />
           <div style={{padding: 24, height: '100%', background: colorBgContainer}}>
             <Outlet />
           </div>
