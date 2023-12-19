@@ -93,7 +93,7 @@ export const LayoutScreen: React.FC = () => {
   },[location.pathname])
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible collapsed={collapsed} collapsedWidth={0} breakpoint={'lg'} onCollapse={(value) => setCollapsed(value)}>
         <div className="demo-logo-vertical" />
         <Menu theme="dark" defaultSelectedKeys={['1']} selectedKeys={current} mode="inline" items={items} onSelect={onSelectMenu} />
       </Sider>
